@@ -1,0 +1,67 @@
+   import 'package:flutter/material.dart';
+   import 'dart:math';
+
+   void main() {
+     runApp(MyApp());
+   }
+
+   class MyApp extends StatelessWidget {
+     @override
+     Widget build(BuildContext context) {
+       return MaterialApp(
+         home: RandomImageViewer(),
+       );
+     }
+   }
+
+   class RandomImageViewer extends StatefulWidget {
+     @override
+     _RandomImageViewerState createState() => _RandomImageViewerState();
+   }
+
+   class _RandomImageViewerState extends State<RandomImageViewer> {
+     final List<String> _images = [
+       'assets/images/image1.jpg',
+       'assets/images/image2.jpg',
+       'assets/images/image3.jpg',
+     ];
+
+     late String _currentImage;
+
+     @override
+     void initState() {
+       super.initState();
+       _currentImage = _images[Random().nextInt(_images.length)];
+     }
+
+     void _showRandomImage() {
+       setState(() {
+         _currentImage = _images[Random().nextInt(_images.length)];
+       });
+     }
+
+     @override
+     Widget build(BuildContext context) {
+       return Scaffold(
+         appBar: AppBar(title: Text('Random Image Viewer')),
+         body: Center(
+           child: Column(
+             mainAxisAlignment: MainAxisAlignment.center,
+             children: [
+               Image.asset(
+                 _currentImage,
+                 width: 300,
+                 height: 300,
+                 fit: BoxFit.cover,
+               ),
+               SizedBox(height: 20),
+               ElevatedButton(
+                 onPressed: _showRandomImage,
+                 child: Text('Show Random Image'),
+               ),
+             ],
+           ),
+         ),
+       );
+     }
+   }
